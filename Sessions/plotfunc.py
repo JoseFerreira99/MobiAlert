@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import csv
 
-filepath = '/home/jose/Documentos/GitHub/MobiAlert/MobiAlert_A-main/Sessions/porto.csv'
+filepath = '/home/jose/Documentos/GitHub/MobiAlert/Sessions/porto.csv'
 
 # Lists to store lon_center, lat_center, lon_point, and lat_point
 lon_center = []
@@ -16,7 +16,7 @@ with open(filepath, 'r') as file:
     next(csv_reader)  # Skip the header
     next(csv_reader)  # Skip the second line
     for row in csv_reader:
-        center_lon = float(row[1].replace('(', ''))\
+        center_lon = float(row[1].replace('(', ''))
         center_lat = float(row[2].replace(')', ''))
         risk = float(row[3].replace(')', ''))
         point_lon = float(row[4])
