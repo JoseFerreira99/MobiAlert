@@ -90,7 +90,7 @@ def main():
                                          
         if Px != -1.00000 and Py != -1.00000 or Px != 0 and Py != 0:    
             print('Starting grid creation')              
-            start_time1 = time.time()
+            #start_time1 = time.time()
             current_city = get_current_city(filepath,Px,Py, maxdistance)   #Do diretório "Cities" verifico qual a cidade em qual o ciclista se encontra
             write_log_file_session(filepath_sessions,current_city)
             
@@ -166,7 +166,7 @@ def main():
                         Py = gps.getLatitude() #Lat
                         if Px != -1.0 and Py != -1.0:
                             is_serial_exception = False
-                            write_led_bar.allLedOFF()
+                            write_led_bar.writeRisk(risk)
                             break     
                                        
                 Py = float(Py)
@@ -189,10 +189,12 @@ def main():
                 risk = coord[2]
                 write_led_bar.writeRisk(risk)
                 
-                if risk != prev_risk:
+                if risk > prev_risk:
+                    prev_risk = coord[2]
                     buzzer.playBuzzer()
-
-                
+                elif risk < prev_risk:
+                    prev_risk = coord[2]
+                                    
                 #end_time8 = time.time() #######
                 #print('Time to update ledbar', end_time8-start_time8) ######
                     
