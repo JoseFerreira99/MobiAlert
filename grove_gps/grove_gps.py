@@ -54,14 +54,14 @@ class GPS:
         while True: 
                     try:
                         line = ser.readline()
-                        
                         GPS.inp = line.decode('ISO-8859-1')
                         #print(GPS.inp + "\n") # uncomment for debugging
                         
                         # GGA data for latitude, longitude, satellites,
                         # altitude, and UTC position               
-                        if GPS.inp[0:6] =='$GPGGA': 
+                        if GPS.inp[0:6] =='$GNGGA': 
                             GPS.GGA = GPS.inp.split(",")
+                            
                             if len(GPS.GGA) >= 10:
                                 #initialize values obtained from the GPS device
                 
@@ -90,21 +90,23 @@ class GPS:
                                     long = -long
 
                                 if lat == -1.0 or long == -1.0:
-                                    GPS.values = [lat, lat_ns, long, long_ew]                            
-                                else: 
+                                    GPS.values = [lat, lat_ns, long, long_ew]   
+                                                             
+                                elif lat != -1.0 or long != -1.0: 
                                     GPS.values = [lat, lat_ns, long, long_ew]
-                                    
                                 break
-                    except serial.SerialException:
+                            
+                    except serial.SerialException as e:
                         lat = -1.0
                         lat_ns = -1.0
                         long  = -1.0
                         long_ew = -1.0
-                        print(serial.SerialException)
                         ser.close()  
+                        print(e)
                         GPS.values = [lat, lat_ns, long, long_ew]
                         ser.open()
                         break
+
                     
                         
             
