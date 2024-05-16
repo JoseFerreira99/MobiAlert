@@ -105,3 +105,5 @@ class LedBar_Write:
         brightness = 255 
         led_pattern = 0b0000111111  #TOP  BOT
         self.ledWriter.writeLedBar(led_pattern, brightness)
+        
+

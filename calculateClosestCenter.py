@@ -21,9 +21,9 @@ def getCenter(Px,Py, grid, max_distance):
         distance_index = getID(distance_List, distance) # Get the index of the minimum distance, equal to center index
         center_and_risk = getItem_byID(center_List, distance_index)
         return center_and_risk
-    
+            
     elif len(center_List) == 1:                
-        closest_center_coord = center_List[0][0], center_List[0][1] # Get centro
+        closest_center_coord = center_List[0][0], center_List[0][1], center_List[0][2], center_List[0][3], center_List[0][4] # Get centro
 
         return closest_center_coord 
     

@@ -97,20 +97,21 @@ def search_grid(Px,Py, indexes_to_search, grid ,max_distance):
     coords_data = None
     indexes_data = None
 
-    for index, data_values in grid.items():
+
+    for i,j,lon,lat,risk in grid:
         for data in indexes_to_search:
             idxi, idxj = data
-            if(idxi, idxj) == index and (idxi, idxj) not in matching_indexes:
-                matching_indexes.append((index, data_values))
-                break     
+            if float(idxi) == float(i) and float(idxj) == float(j): #and (idxi, idxj) not in matching_indexes:
+                if float(idxj) not in matching_indexes and float(idxi) not in matching_indexes:
+                    matching_indexes.append((i,j,lon,lat,risk))
+                    break     
             
-        
-    for indexes, coords in matching_indexes:
-        harvesine = Harvesine(Px,Py, coords[0], coords[1])
+    for i,j,lon,lat,risk in matching_indexes:
+        harvesine = Harvesine(Px,Py, lon,lat)
         distance = harvesine.harvesine_distance()
         if distance < min_distance:    
             min_distance = distance
-            coords_data = coords
-            indexes_data = indexes
+            coords_data = (lon,lat,risk)
+            indexes_data = (i,j)
                                      
     return indexes_data ,coords_data

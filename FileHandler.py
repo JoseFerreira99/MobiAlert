@@ -4,7 +4,6 @@ import datetime
 import time
 
 
-
 def fetch_files_in_folder(filepath):
     if os.path.exists(filepath) and os.path.isdir(filepath):
         files = [file for file in os.listdir(filepath) if os.path.isfile(os.path.join(filepath, file))]
@@ -12,6 +11,8 @@ def fetch_files_in_folder(filepath):
         return files
     else:
         return []
+  
+  
     
 def get_city_grid(filepath,filename):
     grids = fetch_files_in_folder(filepath)

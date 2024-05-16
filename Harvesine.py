@@ -19,7 +19,7 @@ class Harvesine:
         R = 6371  # Earth radius in kilometers
         distance = R * c * 1000  # Convert to meters    
         return distance
-    
+            
     def harvesine_angle(self):
         angle = math.atan2(self.dy_angle, self.dx_angle) * 180 / math.pi         
         return angle
