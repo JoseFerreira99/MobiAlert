@@ -34,7 +34,7 @@ def write_log_file_session(filepath, current_city):
         
 def write_log_file(filepath,current_city, center_info,Px,Py):
     filename =  os.path.join(filepath, os.path.join(filepath,current_city))
-
+    print(filename)
     current_time = datetime.datetime.now()
     current_time_UNIX = int(time.mktime(current_time.timetuple()) * 1000) #Convert timestamp to UNIX 
         

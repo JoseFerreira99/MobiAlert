@@ -66,14 +66,14 @@ class GPS:
                     #print(GPS.GGA) # uncomment for debugging
                     #print('GNGGA Read')
                     if len(GPS.GGA) >= 10:
-                        print('GGA Found')
+                       # print('GGA Found')
                         break
                                        
                 #time.sleep(0.1) #needed by the cmd in order not to crash
            
         except serial.SerialException as e:
             #self.refresh()
-            print('is exception, closing port')
+            #print('is exception, closing port')
             ser.close()
             time.sleep(0.01)
             ser.open()
@@ -87,39 +87,37 @@ class GPS:
             long  = -1.0
             long_ew = -1.0
             GPS.values = [lat, lat_ns, long, long_ew]  
-            ''' 
-        if not self.serialexcept:           
-            if GPS.GGA[2] == '':  # latitude. Technically a float
-                lat =-1.0
-            else:
-                lat = decimal_degrees(safefloat(cleanstr(GPS.GGA[2])))
+            '''         
+        if GPS.GGA[2] == '':  # latitude. Technically a float
+            lat =-1.0
+        else:
+            lat = decimal_degrees(safefloat(cleanstr(GPS.GGA[2])))
             
-            if GPS.GGA[3] == '':  # this should be either N or S
-                lat_ns = ""
-            else:
-                lat_ns=str(GPS.GGA[3])
-            if lat_ns == "S":
-                lat = -lat
+        if GPS.GGA[3] == '':  # this should be either N or S
+            lat_ns = ""
+        else:
+            lat_ns=str(GPS.GGA[3])
+        if lat_ns == "S":
+            lat = -lat
                 
-            if  GPS.GGA[4] == '':  # longitude. Technically a float
-                long = -1.0
-            else:
-                long = decimal_degrees(safefloat(cleanstr(GPS.GGA[4])))
+        if  GPS.GGA[4] == '':  # longitude. Technically a float
+            long = -1.0
+        else:
+            long = decimal_degrees(safefloat(cleanstr(GPS.GGA[4])))
             
-            if  GPS.GGA[5] == '': # this should be either W or E
-                long_ew = ""
-            else:
-                long_ew = str(GPS.GGA[5])
-            if long_ew == "W":
-                long = -long
-            if GPS.GGA[7] == '': # number of satellites
-                sats = 0
-            else:
-                sats = int(cleanstr(GPS.GGA[7]))
-                GPS.values = [lat, lat_ns, long, long_ew, sats]
+        if  GPS.GGA[5] == '': # this should be either W or E
+            long_ew = ""
+        else:
+            long_ew = str(GPS.GGA[5])
+        if long_ew == "W":
+            long = -long
+        if GPS.GGA[7] == '': # number of satellites
+            sats = 0
+
+
+        GPS.values = [lat, lat_ns, long, long_ew, sats]
                  
-        #if self.serialexcept:
-        #    GPS.values = [0,0,0,0]
+
              
        
     # Accessor methods for all the desired GPS values
