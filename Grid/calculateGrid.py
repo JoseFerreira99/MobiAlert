@@ -73,7 +73,9 @@ def create_grid_search(Index_I, Index_J):
     indexes_to_search.append((Index_I-1,Index_J-1))
     indexes_to_search.append((Index_I-1,Index_J+1))
     indexes_to_search.append((Index_I-1, Index_J))
+    
     indexes_to_search.append((Index_I,Index_J))
+
     indexes_to_search.append((Index_I,Index_J+1))
     indexes_to_search.append((Index_I+1,Index_J))
     indexes_to_search.append((Index_I+1,Index_J+1))

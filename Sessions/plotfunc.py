@@ -30,7 +30,7 @@ with open(filepath, 'r') as file:
         lon_point.append(point_lon)
         lat_point.append(point_lat)
         risks.append(risk)
-
+"""
 with open(filepath_1, 'r') as file:
     csv_reader = csv.reader(file)
     for row in csv_reader:
@@ -41,7 +41,7 @@ with open(filepath_1, 'r') as file:
         lats.append(center_lat)
         lon_point.append(point_lon)
         lat_point.append(point_lat)
-
+"""
 
 # Plotting with different colors based on risk
 plt.figure(figsize=(10, 6))
@@ -56,7 +56,7 @@ for i, risk in enumerate(risks):
         plt.plot(lon_center[i], lat_center[i], 'rx', color='red')
         plt.plot(lon_point[i], lat_point[i], 'ro',  color='red')
 
-plt.plot(lons,lats, color = 'lightgrey')
+#plt.plot(lons,lats, color = 'lightgrey')
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')
 plt.title('Cyclist Trajectory and Respective Centers')
