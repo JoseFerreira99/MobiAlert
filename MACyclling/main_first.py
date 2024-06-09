@@ -30,7 +30,7 @@ def main_first(write_led_bar):
         if lon == -1.0 or lat == -1.0:
             write_led_bar.gps_not_working()
             refresh_count = 0
-            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0:
+            if (time.time() - global_timer) % 1 > 0.99 and refresh_count == 0:
                 #print('GPS Cold Start Started:',(time.time()-global_timer))
                 gps.refresh()
                 lon,lat = gps.getLongitude(),gps.getLatitude()

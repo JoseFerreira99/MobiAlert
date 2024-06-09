@@ -26,7 +26,7 @@ def main_second(grid,i,j,city,write_led_bar):
             write_led_bar.gps_not_working()
             refresh_count = 0
 
-            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0: #fazendo a divisao para resto 0
+            if (time.time() - global_timer) % 1 > 0.99 and refresh_count == 0: #fazendo a divisao para resto 0
                 #print('GPS FUCKED 2ºMAIN', time.time() - gpstimer)
                 gps.refresh()
                 lon,lat = gps.getLongitude(), gps.getLatitude() 
