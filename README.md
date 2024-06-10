@@ -9,8 +9,5 @@ The **Mobialert Pre-Processing** folder has a *main.py* and performs the convers
 The *realinic* starts the operation of the cycling unit. To Start the program you simply run the command:
 
 
-`python3 realinic.py`
 
-\```
-<span style="background-color: #333; color: white; padding: 2px;">python3</span> realinic.py
-\```
+<span style="background-color: black; color: white; padding: 2px;">python3</span> realinic.py
