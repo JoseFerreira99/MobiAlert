@@ -3,6 +3,8 @@
 This program is the implementation of the approach proposed in my master thesis for a embedded system to alert cyclists about critical urban zones on a city. 
 This work was developed on a raspberry PI Zero W, being compatible with other Raspberry PI's, as example the **(?)Raspberry PI 3 (?)** and the Raspberry PI Zero W 2.
 
+All codes are written in python 3, using additional libraries
+
 ## Modules
 
 The *Mobialert Pre-Processing folder* contains a file named 'main.py' , which converts the CSV extracted from the GIS database, CityZones. This CSV file should be located in the *Cities* folder, and the conversion output is exported to the *Cities_Grids* file.
@@ -39,7 +41,7 @@ After that, when you power the Rasperry PI it will automatically start the MobiA
 ## Hardware
 The proposed approach is implemented within the GrovePi hardware framework.
 
-To initializate the UART Port for the GPS, [Text](https://sparklers-the-makers.github.io/blog/robotics/use-neo-6m-module-with-raspberry-pi/)
+To initializate the UART Port for the GPS, [GPS Config](https://sparklers-the-makers.github.io/blog/robotics/use-neo-6m-module-with-raspberry-pi/)
 
 
 ## Dependencies
