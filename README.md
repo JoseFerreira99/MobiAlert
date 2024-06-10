@@ -10,4 +10,4 @@ The *realinic* starts the operation of the cycling unit. To Start the program yo
 
 
 
-<span style="background-color: black; color: white; padding: 2px;">python3</span> realinic.py
+<span style="background-color: #555; color: white; padding: 2px;">python3</span> realinic.py
