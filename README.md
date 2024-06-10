@@ -16,11 +16,11 @@ The *realinic.py* starts the operation of the cycling unit. To Start the program
 
 `sudo python3 realinic.py`
 
-If you want to start the program automattically then you need to acess: 
+If you want to start the program automattically, then on the Raspberry PI Zero W you need to acess: 
 
-  `/etc/rc.local` ,
+  `/etc/rc.local` 
   
-Isinde the file, scroll to the end of it and write the following command: 
+Once inside the file, scroll to the end of it and write the following command: 
 
 `#sudo python3 'filepath_to_file' &` 
 
