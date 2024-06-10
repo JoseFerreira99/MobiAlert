@@ -7,7 +7,7 @@ All codes are written in python 3, using additional libraries
 
 ## Modules
 
-The *Mobialert Pre-Processing folder* contains a file named 'main.py' , which converts the CSV extracted from the GIS database, CityZones. This CSV file should be located in the *Cities* folder, and the conversion output is exported to the *Cities_Grids* file.
+The *Pre-Processing folder* contains a file named 'main.py' , which converts the CSV extracted from the GIS database, CityZones. This CSV file should be located in the *Cities* folder, and the conversion output is exported to the *Cities_Grids* file.
 Before starting the program, it is necessary to ensure that there is at least one 'city.csv' file in either the *Cities* or *Cities_grids* folder on the device being used. Otherwise, the program will enter an infinite loop where nothing happens
 
 To start the indexing process you simply run the command line: 
