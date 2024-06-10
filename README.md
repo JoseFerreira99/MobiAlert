@@ -11,7 +11,7 @@ Before starting the program, it is necessary to ensure that there is at least on
 To start the indexing process you simply run the command line: 
 
 ```
-python3 main.py,
+python3 main.py
 ```
 
 make sure that there are new cities on the *Cities* folder, otherwise the program won't run.
@@ -19,7 +19,7 @@ make sure that there are new cities on the *Cities* folder, otherwise the progra
 The *realinic.py* starts the operation of the cycling unit. To Start the program you simply run the command: 
 
 ```
- python3 realinic.py`
+ python3 realinic.py
 ```
 
 If you want to start the program automattically, then on the Raspberry PI Zero W you need to acess: 
@@ -38,6 +38,9 @@ After that, when you power the Rasperry PI it will automatically start the MobiA
 
 ## Hardware
 The proposed approach is implemented within the GrovePi hardware framework.
+
+To initializate the UART Port for the GPS, [Text](https://sparklers-the-makers.github.io/blog/robotics/use-neo-6m-module-with-raspberry-pi/)
+
 
 ## Dependencies
 Before using,  add this additional libraries using the pip3 package.
