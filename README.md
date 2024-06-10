@@ -5,7 +5,9 @@ To compute the risk zones of a city, it is necessary to extract an CSV from an e
 
 ## MobiAlert modules
 The **Mobialert Pre-Processing** folder has a *main.py* and performs the conversion of the CSV of CityZones, placing the output in the **"Cities_grids"** folder
-The realinic starts the operation of the cycling unit. To Start the program you simply run the command:
-\```
-python3 realinic.py 
-\```
+
+The *realinic* starts the operation of the cycling unit. To Start the program you simply run the command:
+
+
+`python3 realinic.py`
+
