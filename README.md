@@ -25,10 +25,10 @@ The *realinic.py* starts the operation of the cycling unit. To start the program
  python3 realinic.py
 ```
 
-If the program has to be started automattically, during initialization, the Raspberry PI Zero board has to be configured for that. In the following file: 
+If the program has to be started automattically, during initialization, the Raspberry PI Zero board has to be configured for that. For that, use the following link: 
 
 ```
-  /etc/rc.local 
+  [/etc/rc.local](https://www.samwestby.com/tutorials/rpi-startupscript.html] 
   ```
 
 insert the following command line:
