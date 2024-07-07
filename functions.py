@@ -34,7 +34,7 @@ def create_final_grid(filepath, filepathgrid): #filepath to folder cities, filep
                 final_grid = merge_risk_with_grid(centerCSV_List, grid_list) #Junto os riscos às respetivas coordenadas 
                 writeFinalGrid(final_grid, os.path.join(filepathgrid,os.path.join(filepathgrid,city)))# atualizo o ficheiro na pasta GRIDS
                 print('Grid created:', city)
-                
+            
                         
     elif len(cities) != 0 and  len(grids) == 0: #Se houver cidades para indexar e a grid estiver vazia
         for city in cities:

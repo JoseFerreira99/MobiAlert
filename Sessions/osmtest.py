@@ -15,6 +15,7 @@ def csv_to_geojson():
         for row in reader:
             center_lon = float(row[4].replace('(', ''))
             center_lat = float(row[5].replace(')', ''))
+            
             point = kml.newpoint(name="Sample Point", coords=[(center_lon,center_lat)])  # Coordinates are (longitude, latitude)
             print(point)
         kml.save(output_kml)
