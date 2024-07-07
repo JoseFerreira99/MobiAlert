@@ -60,21 +60,21 @@ def create_final_grid(filepath, filepathgrid): #filepath to folder cities, filep
         
         
 ######### MA-CYCLING FUNCTIONS
-def get_current_city(filepath,Px,Py,maxdistance):
+def get_current_city(filepath,Px,Py,maxdistance): #Função para calcular a cidade onde o ciclista se encontra
     
-    cities = fetch_files_in_folder(filepath)
+    cities = fetch_files_in_folder(filepath) #Pego todos os ficheiros nessa pasta
 
-    if len(cities) != 0:
-            for city in cities:
-                centerCSV_List = read_csv(os.path.join(filepath,city))
-                center = getClosestCenter(Px, Py, centerCSV_List, maxdistance)
-                if  center is not None:
-                    current_city = city
+    if len(cities) != 0:  #Se tem ficheiros 
+            for city in cities: 
+                centerCSV_List = read_csv(os.path.join(filepath,city)) #leio csv's
+                center = getClosestCenter(Px, Py, centerCSV_List, maxdistance) #calculo o centro mais proximo 
+                if  center is not None: #Se achou centro 
+                    current_city = city #retorno o nome do ficheiro csv 'city.csv'
                     
-                    return current_city
-                else: return None 
+                    return current_city 
+                else: return None  # Se não, retono none
 
-def merge_risk_with_grid(centerList, grid):
+def merge_risk_with_grid(centerList, grid): #Dou merge da Grid criada com o respetivo risco
     merged_list = []
     for lon,lat,risk in centerList:
         for i,j,lon1,lat1 in grid:
@@ -86,7 +86,7 @@ def merge_risk_with_grid(centerList, grid):
 
 
 
-def get_final_grid(city, filepathgrid):
+def get_final_grid(city, filepathgrid): #Apanho a grid final
     final_grid = read_final_grid_csv(os.path.join(filepathgrid,city))
     return final_grid    
 

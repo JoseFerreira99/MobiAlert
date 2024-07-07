@@ -23,24 +23,3 @@ class Harvesine:
     def harvesine_angle(self):
         angle = math.atan2(self.dy_angle, self.dx_angle) * 180 / math.pi         
         return angle
-"""
-def calculate_angle(lon1, lat1, lon2, lat2):
-
-    lon1 = float(lon1)
-    lat1 = float(lat1)
-    lon2 = float(lon2)
-    lat2 = float(lat2)       
-
-    delta_lon = math.radians(lon2 - lon1)
-    phi1 = math.radians(lat1)
-    phi2 = math.radians(lat2)
-
-    y = math.sin(delta_lon) * math.cos(phi2)
-    x = math.cos(phi1) * math.sin(phi2) - math.sin(phi1) * math.cos(phi2) * math.cos(delta_lon)
-
-    bearing = math.atan2(y, x)
-    bearing_degrees = math.degrees(bearing)
-    bearing_degrees = (bearing_degrees ) 
-
-    return bearing_degrees
-"""

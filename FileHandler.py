@@ -4,7 +4,7 @@ import datetime
 import time
 
 
-def fetch_files_in_folder(filepath):
+def fetch_files_in_folder(filepath): #Função para ver os ficheiros de uma certa pasta
     if os.path.exists(filepath) and os.path.isdir(filepath):
         files = [file for file in os.listdir(filepath) if os.path.isfile(os.path.join(filepath, file))]
   
@@ -14,7 +14,7 @@ def fetch_files_in_folder(filepath):
   
   
     
-def get_city_grid(filepath,filename):
+def get_city_grid(filepath,filename): #Função para apanhar a cidade em questão
     grids = fetch_files_in_folder(filepath)
     if len(grids) != 0:
         for city in grids:
@@ -24,15 +24,15 @@ def get_city_grid(filepath,filename):
                 return None
 
 
-def write_log_file_session(filepath, current_city):
-    filename = os.path.join(filepath, os.path.join(filepath, current_city))
+def write_log_file_session(filepath, current_city): #Função para escrever no log file o inicio da sessao
+    filename = os.path.join(filepath, os.path.join(filepath, current_city)) #Crio um log file com o mesmo nome que o ficheiro retornado pelo cityzones
     current_time = datetime.datetime.now()
     with open(filename, 'a') as file:   #Open file
         file.write('session:')
         file.write(f"{current_time},{current_city}\n")
         
         
-def write_log_file(filepath,current_city, center_info,Px,Py):
+def write_log_file(filepath,current_city, center_info,Px,Py): #Função para escrever no log file as informações do centro, escreve centenas a milhares por sessão
     filename =  os.path.join(filepath, os.path.join(filepath,current_city))
     print(filename)
     current_time = datetime.datetime.now()
@@ -44,14 +44,14 @@ def write_log_file(filepath,current_city, center_info,Px,Py):
 
 
 
-def writeQuadrants(coordinates_list, filepath):
+def writeQuadrants(coordinates_list, filepath): #Função para escrever a grid num ficheiro csv
     if len(coordinates_list) !=0:
         with open(filepath, 'a') as file:
             for i, j, lon, lat in coordinates_list:
                 file.write(f"{i},{j},{lon},{lat}\n")
                 file.flush()
 
-def writeFinalGrid(coordinates_list, filepath):
+def writeFinalGrid(coordinates_list, filepath): #Função para escrever o risco num ficheiro csv
     if len(coordinates_list) !=0:
         with open(filepath, 'w') as file:
             for i, j, lon, lat ,risk in coordinates_list:
@@ -60,7 +60,7 @@ def writeFinalGrid(coordinates_list, filepath):
 
 
 
-def read_log_file(filepath,current_city):
+def read_log_file(filepath,current_city): #Função para ler  o ficheiro log de cada sessão [i,j, lon,lat,risk]
 
     filename =  os.path.join(filepath, os.path.join(filepath,current_city))
     csvList = []
@@ -77,7 +77,7 @@ def read_log_file(filepath,current_city):
     return csvList
 
 
-def read_final_grid_csv(filepath):
+def read_final_grid_csv(filepath): #Função para ler a GRID
     csvList = []    
     with open(filepath, 'r', newline='') as file:
         reader = csv.reader(file)
@@ -92,7 +92,7 @@ def read_final_grid_csv(filepath):
     return csvList
 
 
-def read_grid_csv(filepath):
+def read_grid_csv(filepath): #Função para ler a GRRID sem o risco
     csvList = []    
     with open(filepath, 'r', newline='') as file:
         reader = csv.reader(file)
@@ -106,7 +106,7 @@ def read_grid_csv(filepath):
     return csvList
 
 
-def read_finalgrid_indexes(file_path):
+def read_finalgrid_indexes(file_path): #Função para ler os indexes ?
     data = {}
     
     with open(file_path, 'r') as csvfile:
@@ -118,8 +118,8 @@ def read_finalgrid_indexes(file_path):
     return data
 
 
-def read_csv(filepath): 
-    #Leitura ficheiro CSV, Retorna o centro e a  riskzone em listas diferentes
+def read_csv(filepath):  #Função para ler o Ficheiro CITYZONES
+    #Leitura ficheiro CSV, Retorna o centro e a  riskzone em listas diferentes -- CITYZONES
    
     csvList = [] #Center Coordinates and RISK List        
     with open(filepath, 'r', newline='') as file:

@@ -1,38 +1,44 @@
 from Harvesine import  Harvesine
 
 
-def calculate1Q(quadrant_list ,Lon_Ref, Lat_Ref):
+def calculate1Q(quadrant_list ,Lon_Ref, Lat_Ref): #Cálculo do 1Q
     ref_listi = []
     ref_listj = []
 
     Index_I = 0
     Index_J = 0
 
-    for lon, lat in quadrant_list: 
+    for lon, lat in quadrant_list:  #Para cada ponto do quadrante
         harversine = Harvesine(Lon_Ref,Lat_Ref,lon,lat)
         
-        angle = harversine.harvesine_angle()
+        angle = harversine.harvesine_angle() #Calculo ângulo
         distance = harversine.harvesine_distance()
-        if angle == 0: 
-            ref_listj.append((Index_J, lon, lat))
-            Index_J += 1
+        
+        ##LISTA DE REFERENCIA J
+        if angle == 0:  #CComo é 1Q, se ângulo == 0, encontra-se à direita do centro do referencial
+            ref_listj.append((Index_J, lon, lat)) # adiciono 
+            Index_J += 1 # aumento indexJ
 
-        if angle == 0 and distance < 10:
+        if angle == 0 and distance < 10: #Não sei bem se isto está a fazer alguma coisa, mas acho que não
             ref_listi.append((Index_I,lon,lat))
             Index_I += 1
 
-        if angle == 90: 
-            ref_listi.append((Index_I,lon,lat))          
-            Index_I += 1
+        ##LISTA DE REFERENCIA I
+        if angle == 90:  #Se ângulo== 90, encontra-se acima do centro do referencial
+            ref_listi.append((Index_I,lon,lat))           #adiciono
+            Index_I += 1 #aumento index I
    
-    gridi = create_1Q_I(quadrant_list,ref_listi)
-    gridj = create_1Q_J(quadrant_list,ref_listj)
-    grid = create_grid_ij(gridi,gridj)
+    gridi = create_1Q_I(quadrant_list,ref_listi) #Vejo todos os pontos que se encontram à frente de cada ponto da lista de referencia e atribuio o valor 
+    gridj = create_1Q_J(quadrant_list,ref_listj) # Vejo todos os pontos que se encontram acima de cada ponto da lista de referencia e atribuio o valor
+    grid = create_grid_ij(gridi,gridj) # interseção
 
-    if len(grid) != len(quadrant_list):
-        isnewvertex,new_ref_list_i = find_new_vertex_I(quadrant_list,ref_listi,ref_listj,Index_I)
-        isnewvertexj, new_ref_list_j = find_new_vertex_J(quadrant_list, ref_listi, ref_listj,Index_I)
+    if len(grid) != len(quadrant_list): #Se o tamanho for diferente 
+        isnewvertex,new_ref_list_i = find_new_vertex_I(quadrant_list,ref_listi,ref_listj,Index_I) #procura de novos vertices
+        isnewvertexj, new_ref_list_j = find_new_vertex_J(quadrant_list, ref_listi, ref_listj,Index_I) #same here
 
+
+        #os 3 if seguintes servem apenas para tomar ações com base nos 3 casos possíveis de encontrar novo vertice, ou encontra apenas 
+        #para a lista de referencia i, ou apenas para a lista de referencia j ou encontra tanto como para a lista de referencia j e i
         if isnewvertex and isnewvertexj:
             new_gridi = create_1Q_I(quadrant_list, new_ref_list_i)
             new_gridj = create_1Q_J(quadrant_list,Index_I)
@@ -54,14 +60,14 @@ def calculate1Q(quadrant_list ,Lon_Ref, Lat_Ref):
     
     else: return grid, Index_I, Index_J, ref_listi, ref_listj
 
-def create_1Q_I(quadrant_list,ref_points_i):
+def create_1Q_I(quadrant_list,ref_points_i): 
     grid_1Q_i = []
     
     for index, lon_ref, lat_ref in ref_points_i:
         for lon,lat in quadrant_list:
             harvesine = Harvesine(lon_ref,lat_ref,lon,lat)
             angle = harvesine.harvesine_angle()
-            if angle == 0:
+            if angle == 0: #Se se encontrar à frente do ponto da lista de referencia, atribuo o valor desse index ao ponto achado
                 if (index, lon, lat) not in grid_1Q_i:
                     grid_1Q_i.append((index,lon,lat)) 
   
@@ -75,16 +81,16 @@ def create_1Q_J(quadrant_list,ref_points_j):
             harvesine = Harvesine(lon_ref, lat_ref, lon, lat)
             angle = harvesine.harvesine_angle()
             distance = harvesine.harvesine_distance()
-            if angle == 0 and distance < 10:
+            if angle == 0 and distance < 10: #Acho que não está a fazer nada, mas não tenho a certeza
                 grid_1Q_j.append((index,lon,lat))
-            if angle == 90:
+            if angle == 90: #Se se encontrar acima da lsita de referencia, atribuo o valor desse index ao ponto achado
                 if (index, lon, lat) not in grid_1Q_j:
                     grid_1Q_j.append((index, lon, lat))
     
     return grid_1Q_j   
 
-def create_grid_ij(grid_1Q_i,grid_1Q_j):
-
+def create_grid_ij(grid_1Q_i,grid_1Q_j): #Interseção
+ 
     grid_ij = []
 
     for index, lon,lat in grid_1Q_i:

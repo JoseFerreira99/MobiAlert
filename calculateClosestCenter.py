@@ -1,25 +1,27 @@
 from Harvesine import Harvesine
 import math
 import time
+
+# Função para obter o centro mais próximo dentro de uma distância máxima
 def getCenter(Px,Py, grid, max_distance):
     Px = float(Px)
     Py = float(Py) 
 
-    center_List = [] # center with lon, lat
-    distance_List = []
+    center_List = [] # Lista de centros com longitude, latitude e risco
+    distance_List = []  # Lista de distâncias dos centros
   
     for i ,j ,lon ,lat ,risk in grid:
-        harvesine = Harvesine(Px,Py, lon, lat)
-        distance = harvesine.harvesine_distance()
+        harvesine = Harvesine(Px,Py, lon, lat) # Inicializa a classe Harvesine para calcular a distância
+        distance = harvesine.harvesine_distance()  # Calcula a distância
 
-        if distance < max_distance:
+        if distance < max_distance: # Verifica se a distância é menor que a distância máxima fornecida
             center_List.append((i ,j ,lon ,lat ,risk)) 
             distance_List.append(distance)
 
     if len(center_List) > 1:   
-        distance = min(distance_List) # Get the minimum distance 
-        distance_index = getID(distance_List, distance) # Get the index of the minimum distance, equal to center index
-        center_and_risk = getItem_byID(center_List, distance_index)
+        distance = min(distance_List) # Obtém a menor distância 
+        distance_index = getID(distance_List, distance) # Obtém o índice da menor distância, correspondente ao centro
+        center_and_risk = getItem_byID(center_List, distance_index) # Obtém o centro correspondente ao índice da menor distância
         return center_and_risk
             
     elif len(center_List) == 1:                
@@ -28,14 +30,13 @@ def getCenter(Px,Py, grid, max_distance):
         return closest_center_coord 
     
 
-
+# Função para obter o centro mais próximo a partir de uma lista de centros CSV
 def getClosestCenter(Px, Py, centerCSV_List, max_distance): 
-    # Retorna os centros e as respetivas distancias abaixo do valor max     
     Px = float(Px) # LON
     Py = float(Py) # LAT
            
-    center_List = [] # center with lon, lat
-    distance_List = []
+    center_List = [] # Lista de centros com longitude e latitude
+    distance_List = [] # Lista de distâncias dos centros
                   
     for center in centerCSV_List:  
         # Percorro todos os centros e calculo a distancia para cada um deles

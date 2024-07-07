@@ -16,31 +16,34 @@ maxdistance = calculateMaxDistance(polygon_side)
 
 def main_second(grid,i,j,city,write_led_bar):
     #print('2ºinic entered')
-    global_timer = time.time() #Ativo o timer para so atualizar de segundo em segundo
+    
+    '''
+        Numa segunda iteração é calculado a zona de risco com uso da cidade indexada e da busca rapida "search grid". 
+    
+        Retorna - idxs(i,j), coord (lon,lat,risk)
+    '''
+    
+    
+    global_timer = time.time()
     gps = GPS()
     lon,lat = gps.getLongitude(), gps.getLatitude()
     print('2Inic, coord:', lon,lat)
 
     while True:
-        if lon == -1.0 or lat == -1.0: #Se deu merda
-            write_led_bar.gps_not_working()
+        if lon == -1.0 or lat == -1.0: #Se coordenada é -1.0, quer dizer que o GPS não capturou nenhum dado
+            write_led_bar.gps_not_working() #Update no hardware relevante
             refresh_count = 0
 
-            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0: #fazendo a divisao para resto 0
-                #print('GPS FUCKED 2ºMAIN', time.time() - gpstimer)
+            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0:  #Caso haja um erro de leitura, aguarda 2 segundos pela nova
                 gps.refresh()
-                lon,lat = gps.getLongitude(), gps.getLatitude() 
-                    #print('GPS FUCKED COORD 2ºMAIN', lon,lat)
+                lon,lat = gps.getLongitude(), gps.getLatitude()  
                 refresh_count = 1
                     
-        elif lon != -1.0 and lat !=- 1.0: #se tudo ok
-            indexes_to_search = create_grid_search(i,j) #crio busca em matriz
-            #print('2Inic, search ij:', indexes_to_search)
-            idxs, coord = search_grid(lon, lat, indexes_to_search, grid, maxdistance) #Procuro na grid com base i,j             
-            #print('2Inic, center found:', idxs, coord)
+        elif lon != -1.0 and lat !=- 1.0: #Se coordenada é diferente de -1.0 significa que o GPS capturou dados
+            indexes_to_search = create_grid_search(i,j)  #Retorna a nome da cidade, precisa do filepath, das coordenadas do ciclista e da distancia maxim
+            idxs, coord = search_grid(lon, lat, indexes_to_search, grid, maxdistance) #Retorna a cidade indexada, precisa do ficheiro cityzones e do filepath do ficheiro             
             write_led_bar.writeRisk(coord[2]) #Update LedBar
             write_log_file(filepath_sessions,city,coord,lon,lat)
-            #i,j, risk = idxs[0],idxs[1], coord[2]
             return idxs, coord #(i,j),(lon,lat,risk)
         
         

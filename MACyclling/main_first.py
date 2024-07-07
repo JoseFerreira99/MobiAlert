@@ -16,60 +16,36 @@ maxdistance = calculateMaxDistance(polygon_side)
 
 
 def main_first(write_led_bar): 
-   # print('1ºinic entered') 
+    
+    '''
+    Numa primeira iteração é calculado a zona de risco sem uso da grid. 
+    
+    Retorna - Closest center (i,j,lon,lat,risk), grid(i,j,lon,lat,risk), city ('city'.csv)
+    '''
+    
     global_timer = time.time() #Ativo o timer para so atualizar de segundo em segundo  
-
     gps = GPS()
-    
-    lon,lat = gps.getLongitude(),gps.getLatitude()
-    #print('1ºinic, 1ºcoord:' ,lon,lat)
-    
-    while True:       
-       #lon,lat = gps.getLongitude(),gps.getLatitude() 
-        #print(round((time.time() - global_timer) % 2, 2))
-        if lon == -1.0 or lat == -1.0:
-            write_led_bar.gps_not_working()
-            refresh_count = 0
-            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0:
-                #print('GPS Cold Start Started:',(time.time()-global_timer))
-                gps.refresh()
+    lon,lat = gps.getLongitude(),gps.getLatitude() #Fetch GPS coordinates
+
+    while True:     
+
+        if lon == -1.0 or lat == -1.0: #Se coordenada é -1.0, quer dizer que o GPS não capturou nenhum dado
+            write_led_bar.gps_not_working() #Update no hardware relevante
+            refresh_count = 0 #Garantir que só faz uma leiruta do gps
+            if (time.time() - global_timer) % 2 > 1.99 and refresh_count == 0: #Caso haja um erro de leitura, aguarda 2 segundos pela nova 
+                gps.refresh() #Atualiza o GPS 
                 lon,lat = gps.getLongitude(),gps.getLatitude()
-                #print('GPS Cold Start coord',lon,lat)
-                #print('GPS Cold Start Update::',(time.time()-global_timer))
                 refresh_count = 1
                 
-        elif lon != -1.0 and lat != -1.0:
-            #print('GPS Cold Start Ended::',(time.time()-global_timer))
-        
-            city = get_current_city(filepath,lon,lat, maxdistance)  
-            #print('1Inic, city:', city)
-            grid = get_final_grid(city, filepath_grid) #Escrevo a final grid no diretório "Cities_grid" com o nome igual ao do ficheiro Cities e dou fetch na mesma
-            closest_center = getCenter(lon,lat, grid, maxdistance) #Numa primeira iteração da RPI verifico qual o ponto mais proximo, (lon, lat, risk)
+        elif lon != -1.0 and lat != -1.0: #Se coordenada é diferente de -1.0 significa que o GPS capturou dados
+       
+            city = get_current_city(filepath,lon,lat, maxdistance)  #Retorna a nome da cidade, precisa do filepath, das coordenadas do ciclista e da distancia maxima
+            grid = get_final_grid(city, filepath_grid) #Retorna a cidade indexada, precisa do ficheiro cityzones e do filepath do ficheiro
+            closest_center = getCenter(lon,lat, grid, maxdistance) #retorna o cento mais proximo (i,j,lon,lat,risk), precisa das coordenadas do ciclista, da cidade indexada e da distancia maxima
             #print(closest_center)
-            write_led_bar.writeRisk(closest_center[4]) #Update LedBar
+            write_led_bar.writeRisk(closest_center[4]) #Update do hardware com o risco
             #print('1ºinic exiting', time.time()-global_timer)    
-            write_log_file_session(filepath_sessions,city)
-            write_log_file(filepath_sessions,city,closest_center,lon,lat)  #Escrevo no ficheiro log unix, cidade (nome do ficheiro), centro(lon,lat,risk), ponto apanhado pelo gps (lon,lat)
-            return closest_center, grid,city #(i,j,lon,lat,risk) - (0,1,2,3,4)
+            write_log_file_session(filepath_sessions,city) #Escrever a sessão no logfile
+            write_log_file(filepath_sessions,city,closest_center,lon,lat)  #Escrever informação relevant no log file
+            return closest_center, grid,city #Retornar (i,j,lon,lat,risk)
 
-    '''
-    elif lon == -1.0 or lat == -1.0: #O GPS,  num start a frio precisa de 27.5s para apanhar as primeiras coordenadas        
-        write_led_bar.gps_not_working()
-        gps_refresh_timer = time.time()
-        while True:  
-            if (time.time()-gps_refresh_timer)%1.0  >= 0.99:        
-                print('refreshing GPS', (time.time()-gps_refresh_timer) % 1.0)
-                gps.refresh()
-                lon,lat = gps.getLongitude(), gps.getLatitude()
-                if lon != -1.0 and lat != -1.0: #se deu diferente
-                    city = get_current_city(filepath,lon,lat, maxdistance)  #same de emcima
-                    print('1Inic, city:', city)
-                    grid = get_final_grid(city, filepath_grid) #Escrevo a final grid no diretório "Cities_grid" com o nome igual ao do ficheiro Cities e dou fetch na mesma
-                    closest_center = getCenter(lon,lat, grid, maxdistance) #Numa primeira iteração da RPI verifico qual o ponto mais proximo, (lon, lat, risk)
-                    write_led_bar.allLedOFF()
-                    write_led_bar.writeRisk(closest_center[4])
-                    print('1Inic, center found', closest_center) 
-                    write_log_file_session(filepath_sessions,city)
-                    write_log_file(filepath_sessions,city,closest_center,lon,lat)  #Escrevo no ficheiro log unix, cidade (nome do ficheiro), centro(lon,lat,risk), ponto apanhado pelo gps (lon,lat)
-                    return closest_center, grid,city
-    '''
